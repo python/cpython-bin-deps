@@ -148,7 +148,7 @@
 #define PACKAGE_NAME "libffi"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libffi 3.4.3"
+#define PACKAGE_STRING "libffi 3.4.4"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "libffi"
@@ -157,7 +157,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.4.3"
+#define PACKAGE_VERSION "3.4.4"
 
 /* The size of `double', as computed by sizeof. */
 #define SIZEOF_DOUBLE 8
@@ -189,7 +189,7 @@
 /* #undef USING_PURIFY */
 
 /* Version number of package */
-#define VERSION "3.4.3"
+#define VERSION "3.4.4"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
