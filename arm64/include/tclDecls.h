@@ -141,7 +141,7 @@ EXTERN int		Tcl_GetBooleanFromObj(Tcl_Interp *interp,
 				Tcl_Obj *objPtr, int *intPtr);
 /* 33 */
 EXTERN unsigned char *	Tcl_GetByteArrayFromObj(Tcl_Obj *objPtr,
-				int *lengthPtr);
+				int *numBytesPtr);
 /* 34 */
 EXTERN int		Tcl_GetDouble(Tcl_Interp *interp, const char *src,
 				double *doublePtr);
@@ -193,7 +193,7 @@ EXTERN int		Tcl_ListObjReplace(Tcl_Interp *interp,
 EXTERN Tcl_Obj *	Tcl_NewBooleanObj(int intValue);
 /* 50 */
 EXTERN Tcl_Obj *	Tcl_NewByteArrayObj(const unsigned char *bytes,
-				int length);
+				int numBytes);
 /* 51 */
 EXTERN Tcl_Obj *	Tcl_NewDoubleObj(double doubleValue);
 /* 52 */
@@ -1867,7 +1867,12 @@ EXTERN void		Tcl_ZlibStreamSetCompressionDictionary(
 /* Slot 680 is reserved */
 /* Slot 681 is reserved */
 /* Slot 682 is reserved */
-/* 683 */
+/* Slot 683 is reserved */
+/* Slot 684 is reserved */
+/* Slot 685 is reserved */
+/* Slot 686 is reserved */
+/* Slot 687 is reserved */
+/* 688 */
 EXTERN void		TclUnusedStubEntry(void);
 
 typedef struct {
@@ -1929,7 +1934,7 @@ typedef struct TclStubs {
     void (*tclFreeObj) (Tcl_Obj *objPtr); /* 30 */
     int (*tcl_GetBoolean) (Tcl_Interp *interp, const char *src, int *intPtr); /* 31 */
     int (*tcl_GetBooleanFromObj) (Tcl_Interp *interp, Tcl_Obj *objPtr, int *intPtr); /* 32 */
-    unsigned char * (*tcl_GetByteArrayFromObj) (Tcl_Obj *objPtr, int *lengthPtr); /* 33 */
+    unsigned char * (*tcl_GetByteArrayFromObj) (Tcl_Obj *objPtr, int *numBytesPtr); /* 33 */
     int (*tcl_GetDouble) (Tcl_Interp *interp, const char *src, double *doublePtr); /* 34 */
     int (*tcl_GetDoubleFromObj) (Tcl_Interp *interp, Tcl_Obj *objPtr, double *doublePtr); /* 35 */
     int (*tcl_GetIndexFromObj) (Tcl_Interp *interp, Tcl_Obj *objPtr, CONST84 char *const *tablePtr, const char *msg, int flags, int *indexPtr); /* 36 */
@@ -1946,7 +1951,7 @@ typedef struct TclStubs {
     int (*tcl_ListObjLength) (Tcl_Interp *interp, Tcl_Obj *listPtr, int *lengthPtr); /* 47 */
     int (*tcl_ListObjReplace) (Tcl_Interp *interp, Tcl_Obj *listPtr, int first, int count, int objc, Tcl_Obj *const objv[]); /* 48 */
     Tcl_Obj * (*tcl_NewBooleanObj) (int intValue); /* 49 */
-    Tcl_Obj * (*tcl_NewByteArrayObj) (const unsigned char *bytes, int length); /* 50 */
+    Tcl_Obj * (*tcl_NewByteArrayObj) (const unsigned char *bytes, int numBytes); /* 50 */
     Tcl_Obj * (*tcl_NewDoubleObj) (double doubleValue); /* 51 */
     Tcl_Obj * (*tcl_NewIntObj) (int intValue); /* 52 */
     Tcl_Obj * (*tcl_NewListObj) (int objc, Tcl_Obj *const objv[]); /* 53 */
@@ -2587,7 +2592,12 @@ typedef struct TclStubs {
     void (*reserved680)(void);
     void (*reserved681)(void);
     void (*reserved682)(void);
-    void (*tclUnusedStubEntry) (void); /* 683 */
+    void (*reserved683)(void);
+    void (*reserved684)(void);
+    void (*reserved685)(void);
+    void (*reserved686)(void);
+    void (*reserved687)(void);
+    void (*tclUnusedStubEntry) (void); /* 688 */
 } TclStubs;
 
 extern const TclStubs *tclStubsPtr;
@@ -3932,8 +3942,13 @@ extern const TclStubs *tclStubsPtr;
 /* Slot 680 is reserved */
 /* Slot 681 is reserved */
 /* Slot 682 is reserved */
+/* Slot 683 is reserved */
+/* Slot 684 is reserved */
+/* Slot 685 is reserved */
+/* Slot 686 is reserved */
+/* Slot 687 is reserved */
 #define TclUnusedStubEntry \
-	(tclStubsPtr->tclUnusedStubEntry) /* 683 */
+	(tclStubsPtr->tclUnusedStubEntry) /* 688 */
 
 #endif /* defined(USE_TCL_STUBS) */
 
@@ -3958,6 +3973,14 @@ extern const TclStubs *tclStubsPtr;
 	    (tclStubsPtr->tcl_SetVar(interp, varName, newValue, flags))
 #   define Tcl_ObjSetVar2(interp, part1, part2, newValue, flags) \
 	    (tclStubsPtr->tcl_ObjSetVar2(interp, part1, part2, newValue, flags))
+#ifndef __cplusplus
+#   undef Tcl_EventuallyFree
+#   define Tcl_EventuallyFree \
+	   ((void (*)(void *,void *))(void *)(tclStubsPtr->tcl_EventuallyFree)) /* 132 */
+#   undef Tcl_SetResult
+#   define Tcl_SetResult \
+	   ((void (*)(Tcl_Interp *, char *, void *))(void *)(tclStubsPtr->tcl_SetResult)) /* 232 */
+#endif
 #endif
 
 #if defined(_WIN32) && defined(UNICODE)
@@ -4023,14 +4046,14 @@ extern const TclStubs *tclStubsPtr;
 /* Handle Win64 tk.dll being loaded in Cygwin64. */
 #	define Tcl_GetTime(t) \
 		do { \
-		    union { \
+		    struct { \
 			Tcl_Time now; \
 			__int64 reserved; \
 		    } _t; \
 		    _t.reserved = -1; \
 		    tclStubsPtr->tcl_GetTime((&_t.now)); \
 		    if (_t.reserved != -1) { \
-			_t.now.usec = _t.reserved; \
+			_t.now.usec = (long) _t.reserved; \
 		    } \
 		    *(t) = _t.now; \
 		} while (0)
@@ -4053,10 +4076,10 @@ extern const TclStubs *tclStubsPtr;
 #	undef Tcl_UtfNcmp
 #	undef Tcl_UtfNcasecmp
 #	undef Tcl_UniCharNcasecmp
-#	define Tcl_DbNewLongObj ((Tcl_Obj*(*)(long,const char*,int))Tcl_DbNewWideIntObj)
-#	define Tcl_GetLongFromObj ((int(*)(Tcl_Interp*,Tcl_Obj*,long*))Tcl_GetWideIntFromObj)
-#	define Tcl_NewLongObj ((Tcl_Obj*(*)(long))Tcl_NewWideIntObj)
-#	define Tcl_SetLongObj ((void(*)(Tcl_Obj*,long))Tcl_SetWideIntObj)
+#	define Tcl_DbNewLongObj ((Tcl_Obj*(*)(long,const char*,int))(void *)Tcl_DbNewWideIntObj)
+#	define Tcl_GetLongFromObj ((int(*)(Tcl_Interp*,Tcl_Obj*,long*))(void *)Tcl_GetWideIntFromObj)
+#	define Tcl_NewLongObj ((Tcl_Obj*(*)(long))(void *)Tcl_NewWideIntObj)
+#	define Tcl_SetLongObj ((void(*)(Tcl_Obj*,long))(void *)Tcl_SetWideIntObj)
 #	define Tcl_ExprLong TclExprLong
 	static inline int TclExprLong(Tcl_Interp *interp, const char *string, long *ptr){
 	    int intValue;
@@ -4072,13 +4095,13 @@ extern const TclStubs *tclStubsPtr;
 	    return result;
 	}
 #	define Tcl_UniCharNcmp(ucs,uct,n) \
-		((int(*)(const Tcl_UniChar*,const Tcl_UniChar*,unsigned int))tclStubsPtr->tcl_UniCharNcmp)(ucs,uct,(unsigned int)(n))
+		((int(*)(const Tcl_UniChar*,const Tcl_UniChar*,unsigned int))(void *)tclStubsPtr->tcl_UniCharNcmp)(ucs,uct,(unsigned int)(n))
 #	define Tcl_UtfNcmp(s1,s2,n) \
-		((int(*)(const char*,const char*,unsigned int))tclStubsPtr->tcl_UtfNcmp)(s1,s2,(unsigned int)(n))
+		((int(*)(const char*,const char*,unsigned int))(void *)tclStubsPtr->tcl_UtfNcmp)(s1,s2,(unsigned int)(n))
 #	define Tcl_UtfNcasecmp(s1,s2,n) \
-		((int(*)(const char*,const char*,unsigned int))tclStubsPtr->tcl_UtfNcasecmp)(s1,s2,(unsigned int)(n))
+		((int(*)(const char*,const char*,unsigned int))(void *)tclStubsPtr->tcl_UtfNcasecmp)(s1,s2,(unsigned int)(n))
 #	define Tcl_UniCharNcasecmp(ucs,uct,n) \
-		((int(*)(const Tcl_UniChar*,const Tcl_UniChar*,unsigned int))tclStubsPtr->tcl_UniCharNcasecmp)(ucs,uct,(unsigned int)(n))
+		((int(*)(const Tcl_UniChar*,const Tcl_UniChar*,unsigned int))(void *)tclStubsPtr->tcl_UniCharNcasecmp)(ucs,uct,(unsigned int)(n))
 #   endif
 #endif
 
