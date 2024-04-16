@@ -1,0 +1,26 @@
+name: Close Pull Requests
+
+permissions:
+  pull-requests: write
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Close Pull Requests
+      run: >
+        for pr in $(gh pr list --repo $REPO_NAME --json number --jq .[].number); do
+            gh pr close --repo $REPO_NAME --comment "$COMMENT" $pr;
+        done
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_NAME: python/cpython-bin-deps
+        COMMENT: >
+            We do not accept PRs on this repository. Please file an issue at
+            https://github.com/python/cpython requesting an update to the
+            binary packages in this repository.
