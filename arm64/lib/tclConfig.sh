@@ -15,21 +15,21 @@ TCL_DLL_FILE="tcl86t.dll"
 TCL_VERSION='8.6'
 TCL_MAJOR_VERSION='8'
 TCL_MINOR_VERSION='6'
-TCL_PATCH_LEVEL='8.6.14'
+TCL_PATCH_LEVEL='8.6.15'
 
 # C compiler to use for compilation.
 TCL_CC='cl'
 
 # -D flags for use with the C compiler.
-TCL_DEFS='-nologo -c /D_ATL_XP_TARGETING  -W3 -wd4311 -wd4312 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\1\b\externals\tcl-core-8.6.14.0\win\Release_ARM64_VC13\tcl_ThreadedDynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\1\b\externals\tcl-core-8.6.14.0\win\..\win" -I"D:\a\1\b\externals\tcl-core-8.6.14.0\win\..\generic"  -I"D:\a\1\b\externals\tcl-core-8.6.14.0\win\..\libtommath"  /DTCL_TOMMATH /DMP_PREC=4 /Dinline=__inline /DHAVE_ZLIB=1 /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DMP_FIXED_CUTOFFS /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_THREADS=1 /DUSE_THREAD_ALLOC=1 /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT   /DBUILD_tcl'
+TCL_DEFS='-nologo -c /D_ATL_XP_TARGETING  -W3 -wd4311 -wd4312 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\1\b\externals\tcl-core-8.6.15.0\win\Release_ARM64_VC13\tcl_ThreadedDynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\1\b\externals\tcl-core-8.6.15.0\win\..\win" -I"D:\a\1\b\externals\tcl-core-8.6.15.0\win\..\generic"  -I"D:\a\1\b\externals\tcl-core-8.6.15.0\win\..\libtommath"  /DMP_PREC=4 /Dinline=__inline /DHAVE_ZLIB=1 /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DMP_FIXED_CUTOFFS /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_THREADS=1 /DUSE_THREAD_ALLOC=1 /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT   /DBUILD_tcl'
 
 # If TCL was built with debugging symbols, generated libraries contain
 # this string at the end of the library name (before the extension).
 TCL_DBGX=t
 
 # Default flags used in an optimized and debuggable build, respectively.
-TCL_CFLAGS_DEBUG='-nologo -c -W3 -YX -FpD:\a\1\b\externals\tcl-core-8.6.14.0\win\Release_ARM64_VC13\tcl_ThreadedDynamic\ -MDd'
-TCL_CFLAGS_OPTIMIZE='-nologo -c -W3 -YX -FpD:\a\1\b\externals\tcl-core-8.6.14.0\win\Release_ARM64_VC13\tcl_ThreadedDynamic\ -MD'
+TCL_CFLAGS_DEBUG='-nologo -c -W3 -YX -FpD:\a\1\b\externals\tcl-core-8.6.15.0\win\Release_ARM64_VC13\tcl_ThreadedDynamic\ -MDd'
+TCL_CFLAGS_OPTIMIZE='-nologo -c -W3 -YX -FpD:\a\1\b\externals\tcl-core-8.6.15.0\win\Release_ARM64_VC13\tcl_ThreadedDynamic\ -MD'
 
 # Default linker flags used in an optimized and debuggable build, respectively.
 TCL_LDFLAGS_DEBUG='-nologo -machine:ARM64 -debug -debugtype:cv'
@@ -108,7 +108,7 @@ TCL_LIB_FLAG='tcl86t.lib'
 
 # String to pass to linker to pick up the Tcl library from its
 # build directory.
-TCL_BUILD_LIB_SPEC='D:\a\1\b\externals\tcl-core-8.6.14.0\win\Release_ARM64_VC13\tcl86t.lib'
+TCL_BUILD_LIB_SPEC='D:\a\1\b\externals\tcl-core-8.6.15.0\win\Release_ARM64_VC13\tcl86t.lib'
 
 # String to pass to linker to pick up the Tcl library from its
 # installed directory.
@@ -143,12 +143,12 @@ TCL_UNSHARED_LIB_SUFFIX='86t.lib'
 # different place than the directory containing the source files, this
 # points to the location of the sources, not the location where Tcl was
 # compiled.
-TCL_SRC_DIR='D:\a\1\b\externals\tcl-core-8.6.14.0\win\..'
+TCL_SRC_DIR='D:\a\1\b\externals\tcl-core-8.6.15.0\win\..'
 
 # List of standard directories in which to look for packages during
 # "package require" commands.  Contains the "prefix" directory plus also
 # the "exec_prefix" directory, if it is different.
-TCL_PACKAGE_PATH=''
+TCL_PACKAGE_PATH='D:\a\1\a\arm64\lib'
 
 # Tcl supports stub.
 TCL_SUPPORTS_STUBS=1
@@ -161,14 +161,14 @@ TCL_STUB_LIB_FLAG='tclstub86.lib'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # build directory.
-TCL_BUILD_STUB_LIB_SPEC='-LD:\a\1\b\externals\tcl-core-8.6.14.0\win\Release_ARM64_VC13 tclstub86.lib'
+TCL_BUILD_STUB_LIB_SPEC='-LD:\a\1\b\externals\tcl-core-8.6.15.0\win\Release_ARM64_VC13 tclstub86.lib'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # installed directory.
 TCL_STUB_LIB_SPEC='-LD:\a\1\a\arm64\lib tclstub86.lib'
 
 # Path to the Tcl stub library in the build directory.
-TCL_BUILD_STUB_LIB_PATH='D:\a\1\b\externals\tcl-core-8.6.14.0\win\Release_ARM64_VC13\tclstub86.lib'
+TCL_BUILD_STUB_LIB_PATH='D:\a\1\b\externals\tcl-core-8.6.15.0\win\Release_ARM64_VC13\tclstub86.lib'
 
 # Path to the Tcl stub library in the install directory.
 TCL_STUB_LIB_PATH='D:\a\1\a\arm64\lib\tclstub86.lib'
