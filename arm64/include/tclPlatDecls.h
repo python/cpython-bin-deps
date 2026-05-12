@@ -33,14 +33,22 @@
  */
 #if (defined(_WIN32) || defined(__CYGWIN__)) && !defined(_TCHAR_DEFINED)
 #   if defined(_UNICODE)
-	typedef wchar_t TCHAR;
+	typedef unsigned short TCHAR;
 #   else
 	typedef char TCHAR;
 #   endif
 #   define _TCHAR_DEFINED
 #endif
 
-/* !BEGIN!: Do not edit below this line. */
+#ifndef MODULE_SCOPE
+#   ifdef __cplusplus
+#	define MODULE_SCOPE extern "C"
+#   else
+#	define MODULE_SCOPE extern
+#   endif
+#endif
+
+#if TCL_MAJOR_VERSION < 9
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,21 +67,21 @@ EXTERN char *		Tcl_WinTCharToUtf(const TCHAR *str, int len,
 				Tcl_DString *dsPtr);
 /* Slot 2 is reserved */
 /* 3 */
-EXTERN void		TclWinConvertError_(unsigned errCode);
+EXTERN void		Tcl_WinConvertError(unsigned errCode);
 #endif /* WIN */
 #ifdef MAC_OSX_TCL /* MACOSX */
 /* 0 */
 EXTERN int		Tcl_MacOSXOpenBundleResources(Tcl_Interp *interp,
 				const char *bundleName, int hasResourceFile,
-				int maxPathLen, char *libraryPath);
+				Tcl_Size maxPathLen, char *libraryPath);
 /* 1 */
 EXTERN int		Tcl_MacOSXOpenVersionedBundleResources(
 				Tcl_Interp *interp, const char *bundleName,
 				const char *bundleVersion,
-				int hasResourceFile, int maxPathLen,
+				int hasResourceFile, Tcl_Size maxPathLen,
 				char *libraryPath);
 /* 2 */
-EXTERN void		TclMacOSXNotifierAddRunLoopMode_(
+EXTERN void		Tcl_MacOSXNotifierAddRunLoopMode(
 				const void *runLoopMode);
 #endif /* MACOSX */
 
@@ -85,12 +93,12 @@ typedef struct TclPlatStubs {
     TCHAR * (*tcl_WinUtfToTChar) (const char *str, int len, Tcl_DString *dsPtr); /* 0 */
     char * (*tcl_WinTCharToUtf) (const TCHAR *str, int len, Tcl_DString *dsPtr); /* 1 */
     void (*reserved2)(void);
-    void (*tclWinConvertError_) (unsigned errCode); /* 3 */
+    void (*tcl_WinConvertError) (unsigned errCode); /* 3 */
 #endif /* WIN */
 #ifdef MAC_OSX_TCL /* MACOSX */
-    int (*tcl_MacOSXOpenBundleResources) (Tcl_Interp *interp, const char *bundleName, int hasResourceFile, int maxPathLen, char *libraryPath); /* 0 */
-    int (*tcl_MacOSXOpenVersionedBundleResources) (Tcl_Interp *interp, const char *bundleName, const char *bundleVersion, int hasResourceFile, int maxPathLen, char *libraryPath); /* 1 */
-    void (*tclMacOSXNotifierAddRunLoopMode_) (const void *runLoopMode); /* 2 */
+    int (*tcl_MacOSXOpenBundleResources) (Tcl_Interp *interp, const char *bundleName, int hasResourceFile, Tcl_Size maxPathLen, char *libraryPath); /* 0 */
+    int (*tcl_MacOSXOpenVersionedBundleResources) (Tcl_Interp *interp, const char *bundleName, const char *bundleVersion, int hasResourceFile, Tcl_Size maxPathLen, char *libraryPath); /* 1 */
+    void (*tcl_MacOSXNotifierAddRunLoopMode) (const void *runLoopMode); /* 2 */
 #endif /* MACOSX */
 } TclPlatStubs;
 
@@ -112,25 +120,81 @@ extern const TclPlatStubs *tclPlatStubsPtr;
 #define Tcl_WinTCharToUtf \
 	(tclPlatStubsPtr->tcl_WinTCharToUtf) /* 1 */
 /* Slot 2 is reserved */
-#define TclWinConvertError_ \
-	(tclPlatStubsPtr->tclWinConvertError_) /* 3 */
+#define Tcl_WinConvertError \
+	(tclPlatStubsPtr->tcl_WinConvertError) /* 3 */
 #endif /* WIN */
 #ifdef MAC_OSX_TCL /* MACOSX */
 #define Tcl_MacOSXOpenBundleResources \
 	(tclPlatStubsPtr->tcl_MacOSXOpenBundleResources) /* 0 */
 #define Tcl_MacOSXOpenVersionedBundleResources \
 	(tclPlatStubsPtr->tcl_MacOSXOpenVersionedBundleResources) /* 1 */
-#define TclMacOSXNotifierAddRunLoopMode_ \
-	(tclPlatStubsPtr->tclMacOSXNotifierAddRunLoopMode_) /* 2 */
+#define Tcl_MacOSXNotifierAddRunLoopMode \
+	(tclPlatStubsPtr->tcl_MacOSXNotifierAddRunLoopMode) /* 2 */
 #endif /* MACOSX */
+
+#endif /* defined(USE_TCL_STUBS) */
+
+#else /* TCL_MAJOR_VERSION > 8 */
+
+/* !BEGIN!: Do not edit below this line. */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*
+ * Exported function declarations:
+ */
+
+/* Slot 0 is reserved */
+/* 1 */
+EXTERN int		Tcl_MacOSXOpenVersionedBundleResources(
+				Tcl_Interp *interp, const char *bundleName,
+				const char *bundleVersion,
+				int hasResourceFile, Tcl_Size maxPathLen,
+				char *libraryPath);
+/* 2 */
+EXTERN void		Tcl_MacOSXNotifierAddRunLoopMode(
+				const void *runLoopMode);
+/* 3 */
+EXTERN void		Tcl_WinConvertError(unsigned errCode);
+
+typedef struct TclPlatStubs {
+    int magic;
+    void *hooks;
+
+    void (*reserved0)(void);
+    int (*tcl_MacOSXOpenVersionedBundleResources) (Tcl_Interp *interp, const char *bundleName, const char *bundleVersion, int hasResourceFile, Tcl_Size maxPathLen, char *libraryPath); /* 1 */
+    void (*tcl_MacOSXNotifierAddRunLoopMode) (const void *runLoopMode); /* 2 */
+    void (*tcl_WinConvertError) (unsigned errCode); /* 3 */
+} TclPlatStubs;
+
+extern const TclPlatStubs *tclPlatStubsPtr;
+
+#ifdef __cplusplus
+}
+#endif
+
+#if defined(USE_TCL_STUBS)
+
+/*
+ * Inline function declarations:
+ */
+
+/* Slot 0 is reserved */
+#define Tcl_MacOSXOpenVersionedBundleResources \
+	(tclPlatStubsPtr->tcl_MacOSXOpenVersionedBundleResources) /* 1 */
+#define Tcl_MacOSXNotifierAddRunLoopMode \
+	(tclPlatStubsPtr->tcl_MacOSXNotifierAddRunLoopMode) /* 2 */
+#define Tcl_WinConvertError \
+	(tclPlatStubsPtr->tcl_WinConvertError) /* 3 */
 
 #endif /* defined(USE_TCL_STUBS) */
 
 /* !END!: Do not edit above this line. */
 
-#undef TclUnusedStubEntry
-#undef TclMacOSXNotifierAddRunLoopMode_
-#undef TclWinConvertError_
+#endif /* TCL_MAJOR_VERSION */
+
 #ifdef MAC_OSX_TCL /* MACOSX */
 #undef Tcl_MacOSXOpenBundleResources
 #define Tcl_MacOSXOpenBundleResources(a,b,c,d,e) Tcl_MacOSXOpenVersionedBundleResources(a,b,NULL,c,d,e)
@@ -139,6 +203,26 @@ extern const TclPlatStubs *tclPlatStubsPtr;
 #undef TCL_STORAGE_CLASS
 #define TCL_STORAGE_CLASS DLLIMPORT
 
+#ifdef _WIN32
+#   undef Tcl_CreateFileHandler
+#   undef Tcl_DeleteFileHandler
+#   undef Tcl_GetOpenFile
+#endif
+#ifndef MAC_OSX_TCL
+#   undef Tcl_MacOSXOpenVersionedBundleResources
+#   undef Tcl_MacOSXNotifierAddRunLoopMode
+#endif
+
+#if defined(USE_TCL_STUBS) && (defined(_WIN32) || defined(__CYGWIN__))\
+	&& (defined(TCL_NO_DEPRECATED) || TCL_MAJOR_VERSION > 8)
+#undef Tcl_WinUtfToTChar
+#undef Tcl_WinTCharToUtf
+#ifdef _WIN32
+#define Tcl_WinUtfToTChar(string, len, dsPtr) (Tcl_DStringInit(dsPtr), \
+	(TCHAR *)Tcl_UtfToChar16DString((string), (len), (dsPtr)))
+#define Tcl_WinTCharToUtf(string, len, dsPtr) (Tcl_DStringInit(dsPtr), \
+	Tcl_Char16ToUtfDString((const unsigned short *)(string), ((((len) + 2) >> 1) - 1), (dsPtr)))
+#endif
+#endif
+
 #endif /* _TCLPLATDECLS */
-
-
