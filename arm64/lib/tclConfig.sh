@@ -15,17 +15,17 @@ TCL_DLL_FILE="tcl90.dll"
 TCL_VERSION='9.0'
 TCL_MAJOR_VERSION='9'
 TCL_MINOR_VERSION='0'
-TCL_PATCH_LEVEL='9.0.3'
+TCL_PATCH_LEVEL='9.0.4'
 
 # C compiler to use for compilation.
 TCL_CC='cl'
 
 # -D flags for use with the C compiler.
-TCL_DEFS='-nologo -c   -W3 -wd4311 -wd4312 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\1\b\externals\tcl-9.0.3.0\win\Release_ARM64_VC13\tcl_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\1\b\externals\tcl-9.0.3.0\win\..\win" -I"D:\a\1\b\externals\tcl-9.0.3.0\win\..\generic"  -I"D:\a\1\b\externals\tcl-9.0.3.0\win\..\libtommath"  /DMP_PREC=4 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DMP_FIXED_CUTOFFS /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT   /DBUILD_tcl'
+TCL_DEFS='-nologo -c   -W3 -wd4311 -wd4312 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\1\b\externals\tcl-9.0.4.0\win\Release_ARM64_VC13\tcl_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\1\b\externals\tcl-9.0.4.0\win\..\win" -I"D:\a\1\b\externals\tcl-9.0.4.0\win\..\generic"  -I"D:\a\1\b\externals\tcl-9.0.4.0\win\..\libtommath"  /DMP_PREC=4 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DMP_FIXED_CUTOFFS /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT   /DBUILD_tcl'
 
 # Default flags used in an optimized and debuggable build, respectively.
-TCL_CFLAGS_DEBUG='-nologo -c -W3 -YX -FpD:\a\1\b\externals\tcl-9.0.3.0\win\Release_ARM64_VC13\tcl_Dynamic\ -MDd'
-TCL_CFLAGS_OPTIMIZE='-nologo -c -W3 -YX -FpD:\a\1\b\externals\tcl-9.0.3.0\win\Release_ARM64_VC13\tcl_Dynamic\ -MD'
+TCL_CFLAGS_DEBUG='-nologo -c -W3 -YX -FpD:\a\1\b\externals\tcl-9.0.4.0\win\Release_ARM64_VC13\tcl_Dynamic\ -MDd'
+TCL_CFLAGS_OPTIMIZE='-nologo -c -W3 -YX -FpD:\a\1\b\externals\tcl-9.0.4.0\win\Release_ARM64_VC13\tcl_Dynamic\ -MD'
 
 # Default linker flags used in an optimized and debuggable build, respectively.
 TCL_LDFLAGS_DEBUG='-nologo -machine:ARM64 -debug -debugtype:cv'
@@ -104,7 +104,7 @@ TCL_LIB_FLAG='tcl90.lib'
 
 # String to pass to linker to pick up the Tcl library from its
 # build directory.
-TCL_BUILD_LIB_SPEC='D:\a\1\b\externals\tcl-9.0.3.0\win\Release_ARM64_VC13\tcl90.lib'
+TCL_BUILD_LIB_SPEC='D:\a\1\b\externals\tcl-9.0.4.0\win\Release_ARM64_VC13\tcl90.lib'
 
 # String to pass to linker to pick up the Tcl library from its
 # installed directory.
@@ -139,7 +139,7 @@ TCL_UNSHARED_LIB_SUFFIX='90.lib'
 # different place than the directory containing the source files, this
 # points to the location of the sources, not the location where Tcl was
 # compiled.
-TCL_SRC_DIR='D:\a\1\b\externals\tcl-9.0.3.0\win\..'
+TCL_SRC_DIR='D:\a\1\b\externals\tcl-9.0.4.0\win\..'
 
 # List of standard directories in which to look for packages during
 # "package require" commands.  Contains the "prefix" directory plus also
@@ -157,14 +157,14 @@ TCL_STUB_LIB_FLAG='tclstub.lib'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # build directory.
-TCL_BUILD_STUB_LIB_SPEC='-LD:\a\1\b\externals\tcl-9.0.3.0\win\Release_ARM64_VC13 tclstub.lib'
+TCL_BUILD_STUB_LIB_SPEC='-LD:\a\1\b\externals\tcl-9.0.4.0\win\Release_ARM64_VC13 tclstub.lib'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # installed directory.
 TCL_STUB_LIB_SPEC='-LD:\a\1\a\arm64\lib tclstub.lib'
 
 # Path to the Tcl stub library in the build directory.
-TCL_BUILD_STUB_LIB_PATH='D:\a\1\b\externals\tcl-9.0.3.0\win\Release_ARM64_VC13\tclstub.lib'
+TCL_BUILD_STUB_LIB_PATH='D:\a\1\b\externals\tcl-9.0.4.0\win\Release_ARM64_VC13\tclstub.lib'
 
 # Path to the Tcl stub library in the install directory.
 TCL_STUB_LIB_PATH='D:\a\1\a\arm64\lib\tclstub.lib'
